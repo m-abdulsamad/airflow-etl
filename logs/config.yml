@@ -1,0 +1,66 @@
+name: Weblogs
+file: /home/abdulsamad/Documents/repos/sql-etl/logs/weblogs.log
+format: "{log_ip} - {log_username} [{log_time} +0000] \"{log_method} {log_path} HTTP/1.1\" {log_status} {log_bytes} - \"{log_user_agent}\" "
+frequency:
+  seconds: 1
+offset:
+  seconds: 0
+jitter:
+  seconds: 1
+amount: 100
+fields:
+  log_ip:
+    type: ip
+  log_username:
+    type: chance
+    choices:
+      - option: arnold66
+        weight: 0.6
+      - option: bsilva
+        weight: 0.3
+      - option: vdijk
+        weight: 0.03
+      - option: smane
+        weight: 0.03
+      - option: mosalah
+        weight: 0.03
+  log_time:
+    type: timestamp
+    format: "%d-%m-%Y:%H:%M:%S"
+  log_method:
+    type: enum
+    values: [POST, GET, PUT, PATCH, DELETE]
+  log_path:
+    type: enum
+    values:
+      - /auth
+      - /alerts
+      - /events
+      - /playbooks
+      - /lists
+      - /fieldsets
+      - /customers
+      - /collectors
+      - /parsers
+      - /users
+  log_status:
+    type: enum
+    values: [200, 201, 204, 300, 301, 400, 401, 403, 404, 500, 503]
+  log_bytes:
+    type: integer
+    min: 2000
+    max: 5000
+  log_user_agent:
+    type: chance
+    choices:
+      - option: Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36
+        weight: 0.3
+      - option: Mozilla/5.0 (iPhone14,6; U; CPU iPhone OS 15_4 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/19E241 Safari/602.1
+        weight: 0.5
+      - option: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246
+        weight: 0.1
+      - option: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9
+        weight: 0.05
+      - option: Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; RM-1152) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Mobile Safari/537.36 Edge/15.15254
+        weight: 0.05
+      
